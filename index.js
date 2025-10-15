@@ -27,3 +27,14 @@ app.get('/mahasiswa', (req, res) => {
         res.json(results);
     });
 });
+
+app.post('/mahasiswa', (req, res) => {
+    const { nama, alamat, agama } = req.body;
+    if (!nama || !alamat || !agama) {
+        return res.status(400).json({ error: 'Nama dan NIM wajib diisi' });
+    }
+    db.query('INSERT INTO mahasiswa (nama, alamat, agama) VALUES (?, ?, ?)', [nama, alamat, agama], (err, result) => {
+        if (err) return res.status(500).json({ error: err.message });
+        res.json({ message: 'Data mahasiswa berhasil ditambahkan', id: result.insertId });
+    });
+});
