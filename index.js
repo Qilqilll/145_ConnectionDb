@@ -20,3 +20,10 @@ db.connect((err) => {
     }
     console.log('Connected to MySQL database succesfully ' + db.threadId);
 });
+
+app.get('/mahasiswa', (req, res) => {
+    db.query('SELECT * FROM biodata', (err, results) => {
+        if (err) return res.status(500).json({ error: err.message });
+        res.json(results);
+    });
+});
